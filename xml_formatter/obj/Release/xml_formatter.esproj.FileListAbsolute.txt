@@ -1,0 +1,2 @@
+C:\Users\Wende\Projects\JavaScript\XML_Formatter\XML_Formatter\obj\Release\xml_formatter.esproj.SuggestedBindingRedirects.cache
+C:\Users\Wende\Projects\JavaScript\XML_Formatter\XML_Formatter\obj\Release\xml_formatter.esproj.CoreCompileInputs.cache
