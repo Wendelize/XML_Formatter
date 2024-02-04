@@ -51,10 +51,42 @@ function formatButton(input, setOutput) {
             },
         })
         .then(res => res.json())
-        .then(result => setOutput(result))
+        .then(result => setOutput(formatJsonToXml(JSON.parse(result))))
 }
 
-function formatInfoToXML(element, index) {
+function formatJsonToXml(json) {
+    let result = StartTag(PEOPLE_TAG)
+    console.log("LENGTH JSON : ", json.length)
+    console.log(json)
+    result+=recursiveOutputType(json, result)
+
+    result += EndTag(PEOPLE_TAG)
+    return result;
+}
+
+function recursiveOutputType(objectArray) {
+    let result = "";
+    console.log(result)
+    objectArray.forEach(obj => {
+        result += StartTag(obj.type)
+        Object.entries(obj).forEach(([key, value]) => {
+            if (key !== "type" && typeof key === "string") {
+                if (key === "includedInfoList" && value.length > 0) {
+                    result+=recursiveOutputType(obj[key], result);
+                    console.log("RECURSIVE")
+                }
+                result += OutputTag(key, value)
+            }
+        })
+        result += EndTag(obj.type)
+    })
+    return result;
+}
+
+// 1.FOR EVERY OBJ WE HAVE A NEW PERSON
+// 
+
+function formatPersonToXml(element) {
     console.log(element.type)
     let result = ""
 
@@ -90,8 +122,11 @@ function EndTag(tag) {
     return `</${tag}>`
 }
 
+function OutputTag(key,value) {
+    return `<${key}>${value}</${key}>`
+}
 function Indentation() {
     return "    "
 }
 
-export default App;
+export default App

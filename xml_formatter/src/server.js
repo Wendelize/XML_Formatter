@@ -25,7 +25,7 @@ app.post('/', bodyParser.json(), (req, res) => {
 
 
 class Telephone {
-    type = "Telephone";
+    type = "telephone";
     constructor(telephoneLine) {
         this.mobile = telephoneLine.length > 1 ? telephoneLine[1] : ""
         this.landline = telephoneLine.length > 2 ? telephoneLine[2] : ""
@@ -33,7 +33,7 @@ class Telephone {
 }
 
 class Address {
-    type = "Address";
+    type = "address";
     constructor(addressLine) {
         this.street = addressLine.length > 1 ? addressLine[1] : ""
         this.city = addressLine.length > 2 ? addressLine[2] : ""
@@ -42,7 +42,7 @@ class Address {
 }
 
 class Person {
-    type = "Person"
+    type = "person"
 
     constructor(personLine) {
         this.firstname = personLine.length > 1 ? personLine[1] : ""
@@ -72,7 +72,7 @@ class Person {
 }
 
 class FamilyMember {
-    type = "FamilyMember"
+    type = "family"
     constructor(familyLine) {
         this.includedInfoList = []
         this.name = familyLine.length > 1 ? familyLine[1] : ""
