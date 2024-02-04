@@ -1,11 +1,6 @@
 import { useState } from "react"
 
-const emptyTag = ""
 const PEOPLE_TAG = "people"
-const PERSON_TAG = "person"
-const TELEPHONE_TAG = "telephone"
-const ADDRESS_TAG = "address"
-const FAMILY_TAG = "family"
 
 function App() {
     const [input, setInput] = useState("P | förnamn | efternamn \nT | mobilnummer | fastnätsnummer \nT | mobilnummer | fastnätsnummer \nA | gata | stad | postnummer \nF | namn | födelseår \nP | förnamn | efternamn \nA | gata | stad | postnummer ")
@@ -37,6 +32,7 @@ function App() {
 }
 
 function formatButton(input, setOutput) {
+    setOutput("")
     fetch("http://localhost:8000/")
         .then(res => res.json())
         .then(data => console.log(data))
@@ -55,78 +51,55 @@ function formatButton(input, setOutput) {
 }
 
 function formatJsonToXml(json) {
-    let result = StartTag(PEOPLE_TAG)
-    console.log("LENGTH JSON : ", json.length)
-    console.log(json)
-    result+=recursiveOutputType(json, result)
-
+    let result = StartTag(PEOPLE_TAG) + "\n"
+    result += recursivePrettifyOutput(json, 1)
     result += EndTag(PEOPLE_TAG)
     return result;
 }
 
-function recursiveOutputType(objectArray) {
+function recursivePrettifyOutput(objectArray, indentations) {
     let result = "";
     console.log(result)
     objectArray.forEach(obj => {
-        result += StartTag(obj.type)
+        result += Indentation(indentations) + StartTag(obj.type) + "\n"
+        indentations++    
         Object.entries(obj).forEach(([key, value]) => {
             if (key !== "type" && typeof key === "string") {
-                if (key === "includedInfoList" && value.length > 0) {
-                    result+=recursiveOutputType(obj[key], result);
-                    console.log("RECURSIVE")
+                if (key === "includedInfoList") {
+                    result += recursivePrettifyOutput(obj[key], indentations);
                 }
-                result += OutputTag(key, value)
+                else {
+                    result += Indentation(indentations) + OutputTag(key, value) + "\n"
+                }
             }
         })
-        result += EndTag(obj.type)
+        indentations--
+        result += Indentation(indentations) + EndTag(obj.type) + "\n"
     })
     return result;
 }
 
-// 1.FOR EVERY OBJ WE HAVE A NEW PERSON
-// 
-
-function formatPersonToXml(element) {
-    console.log(element.type)
-    let result = ""
-
-    switch (element.type) {
-        case "Person":
-            result += StartTag(PERSON_TAG)
-            result += EndTag(PERSON_TAG)
-            break
-        case "Telephone":
-            result += StartTag(TELEPHONE_TAG)
-            result += EndTag(TELEPHONE_TAG)
-            break
-        case "Address":
-            result += StartTag(ADDRESS_TAG)
-            result += EndTag(ADDRESS_TAG)
-            break
-        case "Family":
-            result += StartTag(FAMILY_TAG)
-            result += EndTag(FAMILY_TAG)
-            break
-        default:
-            console.log("[formatInfoToXML] UNDEFINED ELEMENT")
-            break
-    }
-    return result
-}
-
 function StartTag(tag) {
+
+    console.log("StartTag : ", tag)
     return `<${tag}>`
 }
 
 function EndTag(tag) {
+    console.log("EndTag : ", tag)
     return `</${tag}>`
 }
 
-function OutputTag(key,value) {
+function OutputTag(key, value) {
+    console.log("OutputTag : ", key)
     return `<${key}>${value}</${key}>`
 }
-function Indentation() {
-    return "    "
+
+function Indentation(nrOf) {
+    let indentations = ""
+    for (let i = 0; i < nrOf; i++)
+        indentations += "   "
+    return indentations
 }
 
 export default App

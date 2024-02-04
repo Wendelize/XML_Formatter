@@ -51,7 +51,7 @@ class Person {
     }
 
     addTelephone(telephone) {
-        if (this.includedInfoList.some(e => e.type === "Telephone")) {
+        if (this.includedInfoList.some(e => e.type === telephone.type)) {
             console.log("[Person.addTelephone] TELEPHONE ALREADY EXIST FOR THIS PERSON")
             return
         }
@@ -59,7 +59,7 @@ class Person {
     }
 
     addAddress(address) {
-        if (this.includedInfoList.some(e => e.type === "Address")) {
+        if (this.includedInfoList.some(e => e.type === address.type)) {
             console.log("[Person.addAddress] ADDRESS ALREADY EXIST FOR THIS PERSON")
             return
         }
@@ -80,7 +80,7 @@ class FamilyMember {
     }
 
     addTelephone(telephone) {
-        if (this.includedInfoList.some(e => e.type === "Telephone")) {
+        if (this.includedInfoList.some(e => e.type === telephone.type)) {
             console.log("[FamilyMember.addTelephone] TELEPHONE ALREADY EXIST FOR THIS PERSON")
             return
         }
@@ -88,7 +88,7 @@ class FamilyMember {
     }
 
     addAddress(address) {
-        if (this.includedInfoList.some(e => e.type === "Address")) {
+        if (this.includedInfoList.some(e => e.type === address.type)) {
             console.log("[FamilyMember.addAddress] ADDRESS ALREADY EXIST FOR THIS PERSON")
             return
         }
