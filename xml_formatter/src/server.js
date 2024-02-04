@@ -1,6 +1,6 @@
 const express = require('express')
 var bodyParser = require('body-parser')
-const cors = require('cors');
+const cors = require('cors')
 const app = express()
 const port = 8000
 
@@ -23,9 +23,8 @@ app.post('/', bodyParser.json(), (req, res) => {
 
 // ========= TYPES ==========
 
-
 class Telephone {
-    type = "telephone";
+    type = "phone"
     constructor(telephoneLine) {
         this.mobile = telephoneLine.length > 1 ? telephoneLine[1] : ""
         this.landline = telephoneLine.length > 2 ? telephoneLine[2] : ""
@@ -33,7 +32,7 @@ class Telephone {
 }
 
 class Address {
-    type = "address";
+    type = "address"
     constructor(addressLine) {
         this.street = addressLine.length > 1 ? addressLine[1] : ""
         this.city = addressLine.length > 2 ? addressLine[2] : ""
@@ -46,7 +45,7 @@ class Person {
 
     constructor(personLine) {
         this.firstname = personLine.length > 1 ? personLine[1] : ""
-        this.surname = personLine.length > 2 ? personLine[2] : ""
+        this.lastname = personLine.length > 2 ? personLine[2] : ""
         this.includedInfoList = []
     }
 
@@ -74,9 +73,9 @@ class Person {
 class FamilyMember {
     type = "family"
     constructor(familyLine) {
-        this.includedInfoList = []
         this.name = familyLine.length > 1 ? familyLine[1] : ""
         this.born = familyLine.length > 2 ? familyLine[2] : ""
+        this.includedInfoList = []
     }
 
     addTelephone(telephone) {
@@ -96,7 +95,6 @@ class FamilyMember {
     }
 }
 
-
 // ========= MY SHIT ==============
 function transformInputToPeople(input) {
     let lines = getLines(input)
@@ -105,7 +103,10 @@ function transformInputToPeople(input) {
 }
 
 function getLines(input) {
-    return input.split("\n")
+    let linesArray = input.split("\n").map(l => l.trim()).filter(l => l)
+    //let filtered = linesArray.filtered()
+    linesArray.forEach(l => console.log(l.length, l))
+    return linesArray
 }
 
 function getPeopleArray(lines) {
@@ -151,12 +152,13 @@ function getPeopleArray(lines) {
                 familyMember = new FamilyMember(allWordsInLine)
                 continue
             default:
-                console.log("[newAdd] UNDEFINED CHARACTER")
-                break;
-        };
+                console.log("[newAdd] UNDEFINED CHARACTER ", i)
+                break
+        }
     }
-    if (familyMember) { person.addElement(familyMember) }
+    if (familyMember) { person.addFamilyMember(familyMember) }
     if (person) { arrayOfPeople.push(person) }
-    return arrayOfPeople;
+    console.log()
+    return arrayOfPeople
 }
 

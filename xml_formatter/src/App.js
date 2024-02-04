@@ -6,8 +6,36 @@ function App() {
     const [input, setInput] = useState("P | förnamn | efternamn \nT | mobilnummer | fastnätsnummer \nT | mobilnummer | fastnätsnummer \nA | gata | stad | postnummer \nF | namn | födelseår \nP | förnamn | efternamn \nA | gata | stad | postnummer ")
     const [output, setOutput] = useState("OUTPUT")
 
+    const onFileUpload = (event) => {
+        const file = event.target.files[0]
+        if (file && file.type === 'text/plain') {
+            const reader = new FileReader()
+
+            reader.onload = (e) => {
+                setInput(e.target.result)
+            }
+
+            reader.readAsText(file)
+        } else {
+            alert("[onFileUploaded] UNKNOWN FILE TYPE")
+        }
+    }
+
+    const onDownload = () => {
+        const blob = new Blob([output], { type: "text/xml" })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = "AwesomeOutput.xml"
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+    }
+
     return (
         <div>
+            <input type="file" accept=".txt" onChange={ onFileUpload }/>
             <textarea
                 value={input}
                 onChange={(e) => {
@@ -27,6 +55,11 @@ function App() {
                 multiple
                 style={{ height: "400px", width: "400px" }}
             />
+            <button
+                onClick={onDownload}
+            >
+                DOWNLOAD
+            </button>
         </div>
     )
 }
@@ -34,7 +67,7 @@ function App() {
 function formatButton(input, setOutput) {
     setOutput("")
     fetch("http://localhost:8000/")
-        .then(res => res.json())
+        .then(result => result.json())
         .then(data => console.log(data))
 
     fetch("http://localhost:8000/",
@@ -46,19 +79,19 @@ function formatButton(input, setOutput) {
                 'Content-Type': 'application/json'
             },
         })
-        .then(res => res.json())
+        .then(result => result.json())
         .then(result => setOutput(formatJsonToXml(JSON.parse(result))))
 }
 
 function formatJsonToXml(json) {
-    let result = StartTag(PEOPLE_TAG) + "\n"
-    result += recursivePrettifyOutput(json, 1)
-    result += EndTag(PEOPLE_TAG)
-    return result;
+    let xmlFormat = StartTag(PEOPLE_TAG) + "\n"
+    xmlFormat += recursivePrettifyOutput(json, 1)
+    xmlFormat += EndTag(PEOPLE_TAG)
+    return xmlFormat
 }
 
 function recursivePrettifyOutput(objectArray, indentations) {
-    let result = "";
+    let result = ""
     console.log(result)
     objectArray.forEach(obj => {
         result += Indentation(indentations) + StartTag(obj.type) + "\n"
@@ -66,17 +99,18 @@ function recursivePrettifyOutput(objectArray, indentations) {
         Object.entries(obj).forEach(([key, value]) => {
             if (key !== "type" && typeof key === "string") {
                 if (key === "includedInfoList") {
-                    result += recursivePrettifyOutput(obj[key], indentations);
+                    result += recursivePrettifyOutput(obj[key], indentations)
                 }
                 else {
-                    result += Indentation(indentations) + OutputTag(key, value) + "\n"
+
+                    result += value===""? "" : (Indentation(indentations) + OutputTag(key, value) + "\n")
                 }
             }
         })
         indentations--
         result += Indentation(indentations) + EndTag(obj.type) + "\n"
     })
-    return result;
+    return result
 }
 
 function StartTag(tag) {
