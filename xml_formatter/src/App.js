@@ -3,7 +3,7 @@ import { useState } from "react"
 const PEOPLE_TAG = "people"
 
 function App() {
-    const [input, setInput] = useState("P | förnamn | efternamn \nT | mobilnummer | fastnätsnummer \nT | mobilnummer | fastnätsnummer \nA | gata | stad | postnummer \nF | namn | födelseår \nP | förnamn | efternamn \nA | gata | stad | postnummer ")
+    const [input, setInput] = useState("Input data in the following row-based order:\n\nP | förnamn | efternamn \nT | mobilnummer | fastnätsnummer \nA | gata | stad | postnummer \nF | namn | födelseår \nP | förnamn | efternamn \nA | gata | stad | postnummer ")
     const [output, setOutput] = useState("")
 
     const onFileUpload = (event) => {
@@ -42,9 +42,8 @@ function App() {
             />
             <button
                 onClick={() => formatButton(input, setOutput)}
-                style={{ height: "60px", width:"100px"}}
             >
-                FORMAT
+                Format
             </button>
             <textarea
                 value={output}
@@ -53,9 +52,8 @@ function App() {
             />
             <button
                 onClick={onDownload}
-                style={{ height: "60px", width: "100px" }}
             >
-                DOWNLOAD FILE
+                Download File
             </button>
         </div>
     )

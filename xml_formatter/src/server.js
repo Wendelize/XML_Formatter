@@ -95,7 +95,8 @@ class FamilyMember {
     }
 }
 
-// ========= MY SHIT ==============
+// ========= LINES-TO-DATA CONVERTER ==============
+
 function transformInputToPeople(input) {
     let lines = getLines(input)
     let arrayOfPeople = getPeopleArray(lines)
@@ -158,7 +159,6 @@ function getPeopleArray(lines) {
     }
     if (familyMember) { person.addFamilyMember(familyMember) }
     if (person) { arrayOfPeople.push(person) }
-    console.log()
     return arrayOfPeople
 }
 
