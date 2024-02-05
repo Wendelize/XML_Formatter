@@ -1,4 +1,4 @@
-# VENDELA IS AWESOM AT FORMATTING XML!
+# VENDELAs AWESOM XML-FORMATTING TOOL!
 Download Project!
 You need npm installed, not my problem.
 ### Dependencies :
