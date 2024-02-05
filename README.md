@@ -1,6 +1,7 @@
 # VENDELA IS AWESOM AT FORMATTING XML!
 Download Project!
 You need npm installed, not my problem.
+Using : Node.js v20.11.0.
 
 ### RUN SERVER
 1. Open project in Explorer
