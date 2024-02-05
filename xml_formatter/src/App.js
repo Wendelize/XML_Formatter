@@ -97,8 +97,7 @@ function recursivePrettifyOutput(objectArray, indentations) {
                     result += recursivePrettifyOutput(obj[key], indentations)
                 }
                 else {
-
-                    result += value===""? "" : (Indentation(indentations) + OutputTag(key, value) + "\n")
+                    result += value === "" ? "" : (Indentation(indentations) + OutputTag(key, value) + "\n")
                 }
             }
         })
@@ -109,18 +108,14 @@ function recursivePrettifyOutput(objectArray, indentations) {
 }
 
 function StartTag(tag) {
-
-    console.log("StartTag : ", tag)
     return `<${tag}>`
 }
 
 function EndTag(tag) {
-    console.log("EndTag : ", tag)
     return `</${tag}>`
 }
 
 function OutputTag(key, value) {
-    console.log("OutputTag : ", key)
     return `<${key}>${value}</${key}>`
 }
 

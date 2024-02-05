@@ -8,16 +8,11 @@ app.use(cors())
 
 app.get('/', (req, res) => {
     res.json({
-        text: "HELLO SERVER!"
+        text: `SERVER STARTED ON PORT ${port}`
     })
 })
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
-
 app.post('/', bodyParser.json(), (req, res) => {
-    console.log(req.body)
     res.json(transformInputToPeople(req.body.input))
 })
 
@@ -52,7 +47,7 @@ class Person {
     addTelephone(telephone) {
         if (this.includedInfoList.some(e => e.type === telephone.type)) {
             console.log("[Person.addTelephone] TELEPHONE ALREADY EXIST FOR THIS PERSON")
-            return
+            return null
         }
         this.includedInfoList.push(telephone)
     }
@@ -60,7 +55,7 @@ class Person {
     addAddress(address) {
         if (this.includedInfoList.some(e => e.type === address.type)) {
             console.log("[Person.addAddress] ADDRESS ALREADY EXIST FOR THIS PERSON")
-            return
+            return null
         }
         this.includedInfoList.push(address)
     }
@@ -81,7 +76,7 @@ class FamilyMember {
     addTelephone(telephone) {
         if (this.includedInfoList.some(e => e.type === telephone.type)) {
             console.log("[FamilyMember.addTelephone] TELEPHONE ALREADY EXIST FOR THIS PERSON")
-            return
+            return null
         }
         this.includedInfoList.push(telephone)
     }
@@ -89,7 +84,7 @@ class FamilyMember {
     addAddress(address) {
         if (this.includedInfoList.some(e => e.type === address.type)) {
             console.log("[FamilyMember.addAddress] ADDRESS ALREADY EXIST FOR THIS PERSON")
-            return
+            return null
         }
         this.includedInfoList.push(address)
     }
@@ -105,8 +100,6 @@ function transformInputToPeople(input) {
 
 function getLines(input) {
     let linesArray = input.split("\n").map(l => l.trim()).filter(l => l)
-    //let filtered = linesArray.filtered()
-    linesArray.forEach(l => console.log(l.length, l))
     return linesArray
 }
 
