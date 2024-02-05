@@ -18,3 +18,4 @@
    ```bash
    npm run start 
    ```
+5. Have fun!
