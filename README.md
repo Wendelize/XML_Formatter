@@ -1,5 +1,5 @@
 # VENDELA IS AWESOM AT FORMATTING XML!
-
+You need npm installed. not my problem.
 
 ### RUN SERVER
 1. Open project in Explorer
