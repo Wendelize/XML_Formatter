@@ -4,17 +4,13 @@ const PEOPLE_TAG = "people"
 
 function App() {
     const [input, setInput] = useState("P | förnamn | efternamn \nT | mobilnummer | fastnätsnummer \nT | mobilnummer | fastnätsnummer \nA | gata | stad | postnummer \nF | namn | födelseår \nP | förnamn | efternamn \nA | gata | stad | postnummer ")
-    const [output, setOutput] = useState("OUTPUT")
+    const [output, setOutput] = useState("")
 
     const onFileUpload = (event) => {
         const file = event.target.files[0]
-        if (file && file.type === 'text/plain') {
+        if (file && file.type === "text/plain") {
             const reader = new FileReader()
-
-            reader.onload = (e) => {
-                setInput(e.target.result)
-            }
-
+            reader.onload = (e) => { setInput(e.target.result) }
             reader.readAsText(file)
         } else {
             alert("[onFileUploaded] UNKNOWN FILE TYPE")
@@ -48,7 +44,7 @@ function App() {
                 onClick={() => formatButton(input, setOutput)}
                 style={{ height: "60px", width:"100px"}}
             >
-                Format
+                FORMAT
             </button>
             <textarea
                 value={output}
@@ -57,8 +53,9 @@ function App() {
             />
             <button
                 onClick={onDownload}
+                style={{ height: "60px", width: "100px" }}
             >
-                DOWNLOAD
+                DOWNLOAD FILE
             </button>
         </div>
     )
