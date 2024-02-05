@@ -1,4 +1,4 @@
-# VENDELAs AWESOM XML-FORMATTING TOOL!
+# VENDELAS AWESOM XML-FORMATTING TOOL!
 Download Project!
 You need npm installed, not my problem.
 ### Dependencies :
