@@ -6,10 +6,9 @@ const port = 8000
 
 app.use(cors())
 
-app.get('/', (req, res) => {
-    res.json({
-        text: `SERVER STARTED ON PORT ${port}`
-    })
+// NEVER DELETE THIS BOII!
+app.listen(port, () => {
+    console.log(`SERVER STARTED ON PORT ${port}`)
 })
 
 app.post('/', bodyParser.json(), (req, res) => {

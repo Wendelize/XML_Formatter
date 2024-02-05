@@ -61,9 +61,6 @@ function App() {
 
 function formatButton(input, setOutput) {
     setOutput("")
-    fetch("http://localhost:8000/")
-        .then(result => result.json())
-        .then(data => console.log(data))
 
     fetch("http://localhost:8000/",
         {
